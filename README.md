@@ -19,7 +19,7 @@ Go into your brackets settings and setup your username, password, appID, and dom
 **IMPORTANT: You must run the deploy function twice in order for the change to take effect**
 
 # Usage
-**During file edits/creattions**
+**During file edits/creations**
 - Run *Ctrl-Shift-K* or *File -> Send to Kintone*
 - Run *Ctrl-Alt-Shift-K* or *File -> Deploy Kintone App*.\
 **Note: You must run deploy app **__twice___** to have it take effect**
