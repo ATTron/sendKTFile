@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 
     prefs.definePreference("username", "string", "username");
     prefs.definePreference("password", "string", "password");
-    prefs.definePreference("domain", "string", "https://exmaple.kintone.com", {
+    prefs.definePreference("domain", "string", "https://example.kintone.com", {
         description: "change 'example' to your subdomain"
     });
     prefs.definePreference("appID", "number", "120");
@@ -45,17 +45,7 @@ define(function (require, exports, module) {
         uniqueFiles = [];
         alreadyFound = false;
     }
-    
-    function sleep(milliseconds) {
-       var start = new Date().getTime();
-       for (var i = 0; i < 1e7; i++) {
-           if ((new Date().getTime() - start) > milliseconds){
-               break;
-           }
-       }
-   }
 
-    // Function to run when the menu item is clicked
     function handleSendKTFile() {
         resetValues();
         var DocumentManager = brackets.getModule('document/DocumentManager');
@@ -66,12 +56,12 @@ define(function (require, exports, module) {
         var FileUtils = brackets.getModule('file/FileUtils');
 
         var file = FileSystem.getFileForPath(fullPath);
-        var promise = FileUtils.readAsText(file); // completes asynchronously
+        var promise = FileUtils.readAsText(file);
         promise.done(function (resp) {
                 myFile = resp;
             })
             .fail(function (errorCode) {
-                console.log("Error: " + errorCode); // one of the FileSystemError constants
+                console.log("Error: " + errorCode);
             });
 
         getLoginInfo();
