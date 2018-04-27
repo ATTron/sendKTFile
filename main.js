@@ -1,9 +1,7 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global define, $, brackets, window */
-
 define(function (require, exports, module) {
     "use strict";
 
+    // global vars
     var userName = '';
     var userPassword = '';
     var DOMAIN = '';
@@ -20,7 +18,7 @@ define(function (require, exports, module) {
 
     // setup preferences
     var PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
-        prefs = PreferencesManager.getExtensionPrefs("myextensionname");
+        prefs = PreferencesManager.getExtensionPrefs("sendKTFile");
 
     prefs.definePreference("username", "string", "username");
     prefs.definePreference("password", "string", "password");
