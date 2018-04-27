@@ -1,10 +1,10 @@
 {
     "name": "sentktfile",
     "title": "Kintone File Uploader",
-    "description": "Allows for more streamlined development of Kintone Apps. Allows for JavaScript files to be seemlessly be uploaded to your Kintone Apps",
+    "description": "Allows for more streamlined development of Kintone Apps. JavaScript files seemlessly uploaded to your Kintone Apps",
     "homepage": "https://github.com/ATTron/sendKTFile",
-    "version": "1.1.0",
-    "author": "Anthony Templeton twantempleton11@gmail.com, https://github.com/ATTron",
+    "version": "1.1.1",
+    "author": "Anthony Templeton https://github.com/ATTron",
     "license": "MIT",
     "engines": {
         "brackets": ">=0.24.0"
