@@ -34,6 +34,6 @@ If you see it throwing an error about objects it is possible to ignore it and th
 # Support & Issues
 Post your feature requests, issues, errors. I will keep working to improve it when I can.
 
-# Additionally resources
+# Additional resources
 - [Kintone Developer Portal](https://developer.kintone.io)
 - [Adobe Brackets API Documentation](http://brackets.io/docs/current/)
