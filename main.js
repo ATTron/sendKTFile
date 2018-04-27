@@ -76,7 +76,7 @@ define(function (require, exports, module) {
         // needs base64 encoding
         encoded = window.btoa(userName + ":" + userPassword);
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", BASE_URL + "/preview/app/customize.json" + params);
+        xhttp.open("GET", BASE_URL + "preview/app/customize.json" + params);
         xhttp.setRequestHeader("X-Cybozu-Authorization", encoded);
         xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhttp.onload = function () {
@@ -84,6 +84,7 @@ define(function (require, exports, module) {
                 // success
                 console.log("success");
                 var obj = JSON.parse(xhttp.responseText);
+                console.log(obj);
                 searchJS(obj);
             } else {
                 // error
@@ -92,7 +93,6 @@ define(function (require, exports, module) {
             }
         };
         xhttp.send();
-        deployChange();
     }
 
     function searchJS(obj) {
@@ -101,24 +101,26 @@ define(function (require, exports, module) {
         for (var i = 0; i < fileList.length; i++) {
             if (fileList[i]['type'] === 'FILE') {
                 jsFiles[i] = fileList[i]['file']['name'];
+                key = fileList[i]['file']['fileKey'];
+                allFiles.push({
+                    'type': fileList[i]['type'],
+                    'file': {
+                        'name': fileList[i]['file']['name'],
+                        'fileKey': key
+                    }
+                });
                 if (jsFiles[i] === docPath) {
                     alreadyFound = true;
                     console.log("Found file to replace!");
                     uploadFile(fullPath, 0, true);
+                    continue;
                 } else {
-                    key = fileList[i]['file']['fileKey'];
-                    allFiles.push({
-                        'type': fileList[i]['type'],
-                        'file': {
-                            'name': fileList[i]['file']['name'],
-                            'fileKey': key
-                        }
-                    });
                     uploadFile(jsFiles[i], key, false);
                 }
-            }
-            if (!alreadyFound) {
-                uploadFile(fullPath, 0, true);
+
+                if (!alreadyFound) {
+                    uploadFile(fullPath, 0, true);
+                }
             }
         }
     }
@@ -135,7 +137,7 @@ define(function (require, exports, module) {
 
             var BASE_URL = DOMAIN + "/k/v1/"
 
-            var url = BASE_URL + '/file.json'
+            var url = BASE_URL + 'file.json'
             var xhttp = new XMLHttpRequest();
             xhttp.open('POST', url);
             xhttp.setRequestHeader("X-Cybozu-Authorization", encoded);
@@ -155,25 +157,31 @@ define(function (require, exports, module) {
                             'fileKey': key
                         }
                     });
-                    sendFile(file, key)
+                    console.log("File has been uploaded!");
                 } else {
                     // error
                     console.log(JSON.parse(xhttp.responseText));
                 }
             };
             xhttp.send(formData);
-        } else {
-            sendFile(file, key);
-        }
+        } else {}
+
     }
 
-    function sendFile(file, key) {
-        console.log(allFiles);
+
+    function filterFiles(myArr) {
+        return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj['file']['name']).lastIndexOf(obj['file']['name']) === pos;
+    });
+    }
+
+    function sendFile() {
+        var unique = filterFiles(allFiles);
         var body = {
             "app": id,
             "scope": "ALL",
             "desktop": {
-                "js": allFiles
+                "js": unique
             }
         };
         console.log(body);
@@ -181,42 +189,55 @@ define(function (require, exports, module) {
         var BASE_URL = DOMAIN + "/k/v1/";
 
         var xhttp = new XMLHttpRequest();
-        xhttp.open("PUT", BASE_URL + "/preview/app/customize.json");
+        xhttp.open("PUT", BASE_URL + "preview/app/customize.json");
         xhttp.setRequestHeader("X-Cybozu-Authorization", encoded);
-        xhttp.setRequestHeader("Content-Type", 'application/json');
         xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhttp.setRequestHeader("Content-Type", 'application/json');
         xhttp.onload = function () {
             if (xhttp.status === 200) {
                 // success
                 var obj = JSON.parse(xhttp.responseText);
-                alert("File has been uploaded!");
+                console.log(obj);
             } else {
                 // error
-                alert("An error occured! " + JSON.parse(xhttp.responseText));
                 console.log(JSON.parse(xhttp.responseText));
             }
         };
-        xhttp.send(JSON.stringify(body));
+        return xhttp.send(JSON.stringify(body));
+    }
+
+    function runSendPromise() {
+        var deferred = new $.Deferred();
+        setTimeout(function () {
+            sendFile();
+            deferred.resolve();
+        }, 2000);
+        return deferred.promise();
+    }
+
+    function deploySent() {
+        runSendPromise().done(deployChange());
     }
 
     function deployChange() {
-        var BASE_URL = DOMAIN + "/k/v1";
+        var BASE_URL = DOMAIN + "/k/v1/";
         var body = {
             "apps": [
                 {
-                    "app": id,
+                    "app": id
                 }
-            ],
+            ]
         };
         var xhttp = new XMLHttpRequest();
-        xhttp.open('POST', BASE_URL + "/preview/app/deploy.json");
+        xhttp.open('POST', BASE_URL + "preview/app/deploy.json");
         xhttp.setRequestHeader("X-Cybozu-Authorization", encoded);
         xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.onload = function () {
             if (xhttp.status === 200) {
                 // success
-                window.alert(JSON.parse(xhttp.responseText));
+                console.log("Finish Deploying");
+                console.log(JSON.parse(xhttp.responseText));
             } else {
                 // error
                 console.log(JSON.parse(xhttp.responseText));
@@ -225,10 +246,14 @@ define(function (require, exports, module) {
         xhttp.send(JSON.stringify(body));
     }
 
-    var SEND_COMMAND = "sendktfile.sendfile";
+    var SEND_COMMAND = "sendktfile.sendDoc";
     CommandManager.register("Send to Kintone", SEND_COMMAND, handleSendKTFile);
+
+    var DEPLOY_COMMAND = 'sendktfile.deployfile';
+    CommandManager.register("Deploy Kintone App", DEPLOY_COMMAND, deploySent);
 
     var menu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
     menu.addMenuItem(SEND_COMMAND, "Ctrl-Shift-K");
+    menu.addMenuItem(DEPLOY_COMMAND, "Ctrl-Alt-Shift-K");
 
 });

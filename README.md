@@ -15,21 +15,28 @@ sendKTFile is an [adobe brackets](http://brackets.io/) extention ment to help ma
 - Head to the setup
 
 ## Setting up
-Go into your brackets settings and setup your username, password, appID, and domain. After you reload you should be able to use *Ctrl-Shift-K* to run the extention and upload your file. If the shortcut does not work you can still go into *File -> Send to Kintone*.
+Go into your brackets settings and setup your username, password, appID, and domain. After you reload you should be able to use *Ctrl-Shift-K* to run the file upload. Do see your changes in Kintone you must also deploy the files with *Ctrl-Alt-Shift-K*. **IMPORTANT\
+You must run the deploy function twice in order for the change to take effect**
 
 # Usage
-Run *Ctrl-Shift-K* or *File -> Send to Kintone* with your javascript file open and the primary document in brackets.
+** During file edits/creattions **
+- Run *Ctrl-Shift-K* or *File -> Send to Kintone*
+- Run *Ctrl-Alt-Shift-K* or *File -> Deploy Kintone App*. 
+**Note\
+You must run deploy app **__twice___** to have it take effect**
 
 # Important Note
-If you see it throwing an error about objects it is possible to ignore it and the extention should still work. This has to do with how the API calls are made to Kintone. If you don't see the files update you may have to run it a second time.
+If you see it throwing an error about objects it is possible to ignore it and the extention should still work. This has to do with how the API calls are made to Kintone.
 
 # Change History
+4/28/18 - Code refactor and stability updates
+
 4/27/18 - Inital Release
 
 # Upcoming changes
-- Not showing password in plain text
-- General QOL improvements
-- Stability improvements
+- [ ]Not showing password in plain text
+- [ ]General QOL improvements
+- [x]Stability improvements
 
 # Support & Issues
 Post your feature requests, issues, errors. I will keep working to improve it when I can.
