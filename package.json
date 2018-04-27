@@ -1,5 +1,5 @@
 {
-    "name": "ATTron.sentKTFile",
+    "name": "sentKTFile",
     "title": "Kintone File Uploader",
     "description": "Allows for more streamlined development of Kintone Apps. Allows for JavaScript files to be seemlessly be uploaded to your Kintone Apps",
     "homepage": "https://github.com/ATTron/sendKTFile",
