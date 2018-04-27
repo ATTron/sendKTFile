@@ -236,7 +236,7 @@ define(function (require, exports, module) {
     }
 
     var SEND_COMMAND = "sendktfile.sendfile";
-    CommandManager.register("Send KT", SEND_COMMAND, handleSendKTFile);
+    CommandManager.register("Send to Kintone", SEND_COMMAND, handleSendKTFile);
 
     var menu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
     menu.addMenuItem(SEND_COMMAND, "Ctrl-Shift-K");
