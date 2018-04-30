@@ -3,7 +3,7 @@
     "title": "Kintone File Uploader",
     "description": "Allows for more streamlined development of Kintone Apps. JavaScript files seemlessly uploaded to your Kintone Apps",
     "homepage": "https://github.com/ATTron/sendKTFile",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "author": "Anthony Templeton https://github.com/ATTron",
     "license": "MIT",
     "engines": {

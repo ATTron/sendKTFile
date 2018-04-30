@@ -28,6 +28,8 @@ Go into your brackets settings and setup your username, password, appID, and dom
 If you see it throwing an error about objects it is possible to ignore it and the extention should still work. This has to do with how the API calls are made to Kintone.
 
 # Change History
+4/30/18 - Add URL support
+
 4/28/18 - Code refactor and stability updates
 
 4/27/18 - Inital Release

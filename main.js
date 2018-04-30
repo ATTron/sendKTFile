@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     var fileList = [];
     var allFiles = [];
     var uniqueFiles = [];
+    var URLs = [];
     var alreadyFound = false;
 
     // setup preferences
@@ -43,6 +44,7 @@ define(function (require, exports, module) {
         fileList = [];
         allFiles = [];
         uniqueFiles = [];
+        URLs = [];
         alreadyFound = false;
     }
 
@@ -121,6 +123,12 @@ define(function (require, exports, module) {
                 if (!alreadyFound) {
                     uploadFile(fullPath, 0, true);
                 }
+            } else if (fileList[i]['type'] === 'URL') {
+                var url = fileList[i]['url'];
+                URLs.push({
+                    'type': fileList[i]['type'],
+                    'url': url
+                });
             }
         }
     }
@@ -172,19 +180,22 @@ define(function (require, exports, module) {
     function filterFiles(myArr) {
         return myArr.filter((obj, pos, arr) => {
         return arr.map(mapObj => mapObj['file']['name']).lastIndexOf(obj['file']['name']) === pos;
-    });
+        });
     }
 
     function sendFile() {
+        var urlFiles = URLs;
         var unique = filterFiles(allFiles);
+        var combined = urlFiles.concat(unique);
+        console.log(URLs);
         var body = {
             "app": id,
             "scope": "ALL",
             "desktop": {
-                "js": unique
+                "js": combined
             }
         };
-        console.log(body);
+        //console.log(body);
 
         var BASE_URL = DOMAIN + "/k/v1/";
 
@@ -238,6 +249,7 @@ define(function (require, exports, module) {
                 // success
                 console.log("Finish Deploying");
                 console.log(JSON.parse(xhttp.responseText));
+                window.alert("File has been deployed!");
             } else {
                 // error
                 console.log(JSON.parse(xhttp.responseText));
