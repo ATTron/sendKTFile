@@ -15,14 +15,13 @@ sendKTFile is an [adobe brackets](http://brackets.io/) extention ment to help ma
 - Head to the setup
 
 ## Setting up
-Go into your brackets settings and setup your username, password, appID, and domain. After you reload you should be able to use *Ctrl-Shift-K* to run the file upload. Do see your changes in Kintone you must also deploy the files with *Ctrl-Alt-Shift-K*.\
-**IMPORTANT: You must run the deploy function twice in order for the change to take effect**
+Head into the brackets preferance and overwrite the default values for username, password, appID, and domain then reload brackets.
 
 # Usage
 **During file edits/creations**
 - Run *Ctrl-Shift-K* or *File -> Send to Kintone*
 - Run *Ctrl-Alt-Shift-K* or *File -> Deploy Kintone App*.\
-**Note: You must run deploy app **__twice___** to have it take effect**
+**Note: You must run deploy app **__twice__** to have it take effect**
 
 # Important Note
 If you see it throwing an error about objects it is possible to ignore it and the extention should still work. This has to do with how the API calls are made to Kintone.
