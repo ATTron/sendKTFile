@@ -27,6 +27,8 @@ Head into the brackets preferance and overwrite the default values for username,
 If you see it throwing an error about objects it is possible to ignore it and the extention should still work. This has to do with how the API calls are made to Kintone.
 
 # Change History
+5/07/18 - Add CSS support
+
 4/30/18 - Add URL support
 
 4/28/18 - Code refactor and stability updates

@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var allFiles = [];
     var uniqueFiles = [];
     var URLs = [];
+    var CSS = [];
     var alreadyFound = false;
 
     // setup preferences
@@ -45,6 +46,7 @@ define(function (require, exports, module) {
         allFiles = [];
         uniqueFiles = [];
         URLs = [];
+        CSS = [];
         alreadyFound = false;
     }
 
@@ -98,6 +100,7 @@ define(function (require, exports, module) {
     }
 
     function searchJS(obj) {
+        // get js
         fileList = obj['desktop']['js'];
         var key;
         for (var i = 0; i < fileList.length; i++) {
@@ -130,6 +133,18 @@ define(function (require, exports, module) {
                     'url': url
                 });
             }
+        }
+        
+        // get css
+        var cssList = obj['desktop']['css'];
+        for (var i = 0; i < cssList.length; i++) {
+            CSS.push({
+                'type': cssList[i]['type'],
+                'file': {
+                    'name': cssList[i]['file']['name'],
+                    'fileKey': cssList[i]['file']['fileKey']
+                }
+            });
         }
     }
 
@@ -187,15 +202,15 @@ define(function (require, exports, module) {
         var urlFiles = URLs;
         var unique = filterFiles(allFiles);
         var combined = urlFiles.concat(unique);
-        console.log(URLs);
         var body = {
             "app": id,
             "scope": "ALL",
             "desktop": {
-                "js": combined
+                "js": combined,
+                "css": CSS
             }
         };
-        //console.log(body);
+        console.log(body);
 
         var BASE_URL = DOMAIN + "/k/v1/";
 
